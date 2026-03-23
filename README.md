@@ -85,7 +85,7 @@ README.md
 
 1. Clone the repository
 
-git clone [https://github.com/your-username/civictrack.git](https://github.com/your-username/civictrack.git)
+git clone [https://github.com/AdepuTejaswini9/CivicTrack--Local-Issue-Reporting-and-Priority-System.git](https://github.com/AdepuTejaswini9/CivicTrack--Local-Issue-Reporting-and-Priority-System.git)
 
 2. Navigate to the backend folder
 
