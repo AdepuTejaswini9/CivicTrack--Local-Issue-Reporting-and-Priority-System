@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block title %}Report Issue{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-hero">
+    <h1>Report an Issue</h1>
+    <p>Describe the problem and we'll route it to the right team automatically.</p>
+  </div>
+
+  <div style="max-width:680px">
+    <div class="card">
+      <form method="POST" action="{{ url_for('issue.report_issue') }}"
+            enctype="multipart/form-data">
+
+        <!-- Title -->
+        <div class="form-group">
+          <label class="form-label" for="title">Issue Title *</label>
+          <input class="form-control" type="text" id="title" name="title"
+                 placeholder="e.g. Broken streetlight on Main St"
+                 required maxlength="120" />
+        </div>
+
+        <!-- Priority preview (live JS) -->
+        <div id="priorityPreview" style="display:none;margin-top:-10px;margin-bottom:14px"></div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label class="form-label" for="description">Description *</label>
+          <textarea class="form-control" id="description" name="description"
+                    placeholder="Describe the issue in detail — what, where, when..."
+                    required rows="5"></textarea>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+          <label class="form-label" for="location">Location</label>
+          <input class="form-control" type="text" id="location" name="location"
+                 placeholder="e.g. 123 Main St / Near City Park" maxlength="200" />
+        </div>
+
+        <!-- Category hint -->
+        <div class="card" style="padding:16px;margin-bottom:20px;background:var(--bg-input)">
+          <p style="font-size:0.82rem;color:var(--text-muted);margin:0">
+            💡 <strong style="color:var(--text)">Priority is auto-detected</strong>
+            based on keywords:<br>
+            🔴 <em>fire, flood, accident, emergency</em> → High &nbsp;|&nbsp;
+            🟡 <em>garbage, traffic, pothole</em> → Medium &nbsp;|&nbsp;
+            🟢 <em>suggestion, feedback</em> → Low
+          </p>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+          <label class="form-label">Photo (optional)</label>
+          <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon">📸</div>
+            <p>Drag & drop an image here, or <strong>click to browse</strong></p>
+            <p style="margin-top:4px;font-size:0.78rem">JPG, PNG, GIF up to 5 MB</p>
+          </div>
+          <input type="file" id="fileInput" name="image" accept="image/*" />
+          <div id="preview-container"></div>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn btn-primary btn-full" type="submit">
+          Submit Issue →
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

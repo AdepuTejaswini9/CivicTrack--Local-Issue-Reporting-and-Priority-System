@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Issue Reporter{% endblock %} — CivicTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- ── Navigation Bar ── -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="brand-icon">🏛</span>
+        CivicTrack
+      </a>
+      <ul class="navbar-nav">
+        {% if session.get('user_id') %}
+          <li><a href="{{ url_for('index') }}"
+                 class="{% if request.endpoint == 'index' %}active{% endif %}">Home</a></li>
+          <li><a href="{{ url_for('issue.report_issue') }}"
+                 class="{% if request.endpoint == 'issue.report_issue' %}active{% endif %}">Report Issue</a></li>
+          {% if session.get('is_admin') %}
+            <li><a href="{{ url_for('admin.dashboard') }}"
+                   class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">Admin</a></li>
+          {% endif %}
+          <li><a href="{{ url_for('auth.logout') }}" class="btn btn-sm btn-outline" style="color:var(--text-muted)">Logout</a></li>
+        {% else %}
+          <li><a href="{{ url_for('auth.login') }}"
+                 class="{% if request.endpoint == 'auth.login' %}active{% endif %}">Login</a></li>
+          <li><a href="{{ url_for('auth.register') }}" class="nav-btn btn btn-sm">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Flash Messages ── -->
+  <div class="container" style="padding-top:20px">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {% if category == 'error' %}⚠️{% elif category == 'success' %}✅{% else %}ℹ️{% endif %}
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- ── Page Content ── -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer style="border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text-dim);font-size:0.82rem;">
+    © 2025 CivicTrack — Local Issue Reporting System
+  </footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

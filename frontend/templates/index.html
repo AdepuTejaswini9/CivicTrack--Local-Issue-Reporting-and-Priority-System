@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Hero section -->
+  <div class="page-hero" style="padding-top:10px">
+    <div class="flex-between" style="flex-wrap:wrap;gap:16px">
+      <div>
+        <h1>Community Issues</h1>
+        <p>Browse and track issues reported in your area.</p>
+      </div>
+      {% if session.get('user_id') %}
+        <a href="{{ url_for('issue.report_issue') }}" class="btn btn-primary">
+          ＋ Report an Issue
+        </a>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
+          Login to Report
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Filter chips -->
+  <div class="filter-bar">
+    <span style="font-size:0.82rem;color:var(--text-muted);font-weight:600;margin-right:4px">Filter:</span>
+    <button class="filter-chip active" data-filter="all">All
+      <span style="opacity:0.6">({{ issues | length }})</span>
+    </button>
+    <button class="filter-chip" data-filter="high" style="border-color:rgba(255,77,109,0.3)">🔴 High</button>
+    <button class="filter-chip" data-filter="medium" style="border-color:rgba(255,182,71,0.3)">🟡 Medium</button>
+    <button class="filter-chip" data-filter="low" style="border-color:rgba(62,207,142,0.3)">🟢 Low</button>
+  </div>
+
+  <!-- Issue cards grid -->
+  {% if issues %}
+    <div class="issues-grid">
+      {% for issue in issues %}
+        <div class="issue-card issue-row" data-priority="{{ issue.priority | lower }}">
+          <div class="issue-card-top">
+            <h3>{{ issue.title }}</h3>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+              <span class="badge badge-{{ issue.priority | lower }}">{{ issue.priority }}</span>
+              {% set status_cls = 'inprogress' if issue.status == 'In Progress' else ('resolved' if issue.status == 'Resolved' else 'pending') %}
+              <span class="badge badge-{{ status_cls }}" style="font-size:0.7rem">{{ issue.status }}</span>
+            </div>
+          </div>
+
+          <p class="issue-desc">{{ issue.description }}</p>
+
+          {% if issue.image_path %}
+            <img class="issue-img"
+                 src="{{ url_for('static', filename='../uploads/' + issue.image_path) }}"
+                 alt="Issue image"
+                 onerror="this.style.display='none'">
+          {% endif %}
+
+          <div class="issue-meta">
+            {% if issue.location %}
+              <span>📍 {{ issue.location }}</span>
+            {% endif %}
+            <span>🕐 {{ issue.created_at[:10] }}</span>
+            <span>👤 {{ issue.username or 'Anonymous' }}</span>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>No issues reported yet</h3>
+      <p>Be the first to report a local issue!</p>
+      {% if session.get('user_id') %}
+        <a href="{{ url_for('issue.report_issue') }}" class="btn btn-primary mt-4">Report Now</a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}
