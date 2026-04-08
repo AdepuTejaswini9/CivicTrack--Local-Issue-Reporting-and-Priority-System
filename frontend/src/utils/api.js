@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Direct URL to backend — most reliable, avoids CRA proxy issues
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://civictrack-backend-y1vm.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE,

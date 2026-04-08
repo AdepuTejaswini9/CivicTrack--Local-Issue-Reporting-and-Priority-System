@@ -78,7 +78,7 @@ const IssueCard = ({ issue, onDelete, onStatusUpdate, onUpvote }) => {
         {/* Image if exists */}
         {issue.image && (
           <img
-            src={`http://localhost:5000${issue.image}`}
+            src={`https://civictrack-backend-y1vm.onrender.com${issue.image}`}
             alt="Issue"
             className="card-image"
           />
