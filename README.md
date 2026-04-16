@@ -68,7 +68,7 @@ civictrack/
 | Deployment   | Netlify (Frontend), Render (Backend) |
 
 ---
----
+
 
 ## 🌐 Deployment
 
@@ -78,7 +78,6 @@ civictrack/
 ### 🔗 Live Website  
 👉 https://glittering-stroopwafel-f6d52c.netlify.app
 
----
 
 ---
 
