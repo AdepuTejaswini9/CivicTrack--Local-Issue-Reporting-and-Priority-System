@@ -65,6 +65,20 @@ civictrack/
 | Auth         | JWT (jsonwebtoken + bcryptjs)     |
 | File Upload  | Multer                            |
 | Routing      | React Router v6                   |
+| Deployment   | Netlify (Frontend), Render (Backend) |
+
+---
+---
+
+## 🌐 Deployment
+
+- **Frontend**: Deployed on Netlify  
+- **Backend**: Deployed on Render  
+
+### 🔗 Live Website  
+👉 https://glittering-stroopwafel-f6d52c.netlify.app
+
+---
 
 ---
 
